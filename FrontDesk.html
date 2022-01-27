@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="CSS/main.css" />
+    <style type="text/css">
+      html,
+      body {
+        height: 100%;
+      }
+      
+    </style>
+    <title>Front Desk</title>
+  </head>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://kit.fontawesome.com/9dd9de67e1.js" crossorigin="anonymous"></script>
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="JS/main.js"></script>
+  <script src="JS/bootstrap.min.js"></script>
+  <body onload="FrontDesk()">
+    <nav class="navbar navbar-dark bg-primary bg-gradient">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1" id="Brand">Hotel Management System</span>
+        <div class="navbar-nav me-auto" id="topdiv">
+          <span class="navbar-text" style="color: white" id="toptext">Front Desk 
+          </span>
+        </div>
+        <div  class="navbar-nav ms-auto">
+          <span style="color: white;" id="SID" hidden></span>
+          <span style="color: white;" id="Name">Hello <button class="btn btn-warning ms-3" onclick="logout()">Logout</button></span>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-1" id="sidebar">
+          <input type="text" class="mt-3 form-control" id="SearchInput" onchange="roomSearch()" placeholder="Search any keyword">
+          <div id="FloorSelect">
+          <h3>Floor one</h3>
+          <h3>Floor one</h3>
+          <h3>Floor one</h3>
+        </div>
+          <div id="SideBarSelect">
+            <h3 class="selectable" onclick="RoomShow()">Room</h3>
+            <h3 class="selectable" onclick="RoomStatusShow('booking')">Booking</h3>
+            <h3 class="selectable" onclick="RoomStatusShow('Available')">Available</h3>
+            <h3 class="selectable" onclick="RoomStatusShow('checked-in')">Checked in</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid col-10 scroll" id="container">
+      <div class="row mt-2" id="room-place">
+        
+        
+        
+        
+      </div>
+    </div>
+    <div class="modal fade" id="BookingModal" tabindex="-1" aria-labelledby="BookingModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="BookingModalLabel">Booking</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="BError"></div>
+            <div class="row" id="BookingRow">
+            <label class="form-label col-2">Room No:</label>
+            <input type="text" readonly value="1-01" class="form-control col-11" style="width: auto;" id="BRID">
+            </div>
+            <div class="row" id="BookingRow">
+              <label class="form-label col-2">Type:</label>
+              <input type="text" readonly  class="form-control col-11"style="width: auto;" id="BType">
+            </div>
+            <div class="row" id="BookingRow">
+            <label class="form-label col-2">Price:</label>
+            <input type="text" readonly class="form-control col-11" style="width: auto;" id="BCOST">
+            </div>
+            <div id="CustomerBody">
+              <div class="row" id="BookingRow">
+            <label class="form-label col-2">Customer Name:</label>
+            <input type="text" class="form-control col-11" style="width: auto;" id="BCusName">
+              </div>
+            <div class="row" id="BookingRow">
+              <label class="form-label col-2">Date:</label>
+              <input type="date" class="form-control col-11"style="width: auto;" id="BDate">
+            </div>
+            <div class="row" id="BookingRow">
+              <label class="form-label col-2">Period(days):</label>
+            <input type="text" class="form-control col-11" style="width: auto;" id="BPeriod">
+            </div>
+            <div class="row" id="BookingRow">
+              <label class="form-label col-2">Gender:</label>
+            <select class="form-select col-11" style="width: auto;" id="BGender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            </div>
+            
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="Booking()">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="CheckinModal" tabindex="-1" aria-labelledby="CheckinModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="CheckinModalLabel">Check in</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="Cirror"></div>
+            <div class="row" id="BookingRow">
+            <label class="form-label col-2">Room No:</label>
+            <input type="text" readonly value="1-01" class="form-control col-11" style="width: auto;" id="ChkinRID">
+            <input type="text" readonly value="1-01" class="form-control col-11" style="width: auto;" id="checkBook" hidden>
+            </div>
+            <div class="row" id="BookingRow">
+              <label class="form-label col-2">Type:</label>
+              <input type="text" readonly value="1-01" class="form-control col-11"style="width: auto;" id="ChkinTYPE">
+            </div>
+            <div class="row" id="BookingRow">
+            <label class="form-label col-2">Price:</label>
+            <input type="text" readonly value="1-01" class="form-control col-11" style="width: auto;" id="ChkinPrice">
+            </div>
+            <div id="CustomerBody">
+              <div class="row" id="BookingRow">
+            <label class="form-label col-2">Customer Name:</label>
+            <input type="text" class="form-control col-11" style="width: auto;" id="ChkinCustomer">
+              </div>
+            <div class="row" id="BookingRow">
+              <label class="form-label col-2">Period(days):</label>
+            <input type="text" class="form-control col-11" style="width: auto;" id="ChkinPeriod">
+            </div>
+            <div class="row" id="BookingRow">
+              <label class="form-label col-2">Gender:</label>
+            <select class="form-select col-11" style="width: auto;" id="ChkinGender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            </div>
+            
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick=" Checkin()">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="RoomServicesModal" tabindex="-1" aria-labelledby="RoomServicesModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="RoomServicesModalLabel">Room Services</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            
+            <div class="row" id="BookingRow">
+              <label class="form-label col-2">Room No:</label>
+            <input type="text" readonly class="form-control" style="width: auto;" id="RSRID">
+            </div>
+            <div class="row" id="BookingRow">
+            <label class="form-label col-2">Services Type:</label>
+            <select class="form-select col-11" style="width: auto;" value="Select a services" onchange="RSBody()" id="RSSelect">
+              <option selected hidden>Select a Services</option>
+              <option value="Kitchen">Food Services</option>
+              <option value="Room">Room Services</option>
+            </select>
+          </div>
+            <div id="RoomServicesBody">
+              
+            
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="roomServices()" data-bs-dismiss="modal">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="MenuModal" tabindex="-1" aria-labelledby="MenuModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="MenuModalLabel">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#RoomServicesModal"></button>
+          </div>
+          <div class="modal-body">
+            <div id="MenuError"></div>
+            <div class="row" id="MenuBookingRow">
+              <div class="card col-xl-3 text-center" id="room-card">
+                <div class="card-img-top text-center my-3"><i class="fas fa-door-open fa-7x" id="avalibleIcon"></i></div>
+                <div class="card-body">
+                  <h2 class="card-title">Beef</h2>
+                  <p class="card-text fw-bold fs-4">Price: 20</p>
+                  <div class="dropdown" id="moreOption">
+                    <button class="btn btn-primary ms-auto" >Select</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#RoomServicesModal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#RoomServicesModal" >Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="DetailModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="DetailModalLabel">Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div id="DError"></div>
+              <div class="col-4">
+                <label class="form-label h3" id="DRID">Room: 1-01</label><br>
+                <label class="form-label h3" id="DType">Type: Normal Single Bed</label><br>
+                <label class="form-label h3" id="DCost">Cost per night: RM XX</label><br>
+                <label class="form-label h3" id="DStatus">Current Status: Available</label><br>
+              </div>
+              <div class="col-4">
+                <label class="form-label h3" id="DCusName">Current Customer: None</label><br>
+                <label class="form-label h3" id="DCid">Check in Date: None</label><br>
+                <label class="form-label h3" id="DPeriod">Period: None</label><br>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 border border-1 border-top border-end bookscrool" id="bookingRecordBody">
+                <div id="bookingRecord" class="border-3 border">
+                  <div class="row">
+                    <label class="col-lg-5 form-label" >Booking Date: XX-XX-XXXX</label>
+                    <label class="col-lg-5 form-label" >Check In Date: XX-XX-XXXX</label>
+                    <label class="col-5 form-label">Period: XX</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-5 form-label">Name: Mr.x</label>
+                    <label class="col-5 form-label">Remark:</label>
+                  </div>
+                </div>
+                <div id="bookingRecord" class="border-3 border">
+                  <div class="row">
+                    <label class="col-lg-5 form-label" >Booking Date: XX-XX-XXXX</label>
+                    <label class="col-lg-5 form-label" >Check In Date: XX-XX-XXXX</label>
+                    <label class="col-5 form-label">Period: XX</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-5 form-label">Name: Mr.x</label>
+                    <label class="col-5 form-label">Remark:</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="CheckoutModal" tabindex="-1" aria-labelledby="CheckoutModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="CheckinModalLabel">Check out</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row" id="BookingRow">
+            <label class="form-label col-2">Room No:</label>
+            <input type="text" readonly value="" class="form-control col-11" style="width: auto;" id="CORID">
+            <input type="text" readonly hidden value="" class="form-control col-11" style="width: auto;" id="CORecord">
+            </div>
+            <div class="row" id="BookingRow">
+              <label class="form-label col-2">Type:</label>
+              <input type="text" readonly value="1-01" class="form-control col-11"style="width: auto;" id="COTYPE">
+            </div>
+              <div class="row" id="BookingRow">
+            <label class="form-label col-2">Customer Name:</label>
+            <input type="text" class="form-control col-11" readonly style="width: auto;" id="COCusName">
+              </div>
+              <div class="row" id="BookingRow">
+                <label class="form-label col-2">Check in Date:</label>
+                <input type="text" readonly value="1-01" class="form-control col-11" style="width: auto;" id="COdate">
+                </div>
+            <div class="row" id="BookingRow">
+              <label class="form-label col-2">Period(days):</label>
+            <input type="text" class="form-control col-11" readonly style="width: auto;" id="COPeriod">
+            </div>
+            <div class="row" id="BookingRow">
+              <label class="form-label col-2">Price Details:</label>
+            </div>
+            <textarea class="form-control" rows="4" style="width: 50%;" readonly id="PriceDetails"></textarea>
+            <div class="row" id="BookingRow">
+            <label class="form-label col-2">Total Payment:</label>
+            <input type="text" class="form-control col-11" readonly style="width: auto;" id="TotalPay">
+            <input type="text" hidden class="form-control col-11" readonly style="width: auto;" id="Total">
+            </div>
+          <br>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick= "checkOut()">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </body>
+</html>

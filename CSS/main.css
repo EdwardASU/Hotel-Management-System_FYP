@@ -1,0 +1,90 @@
+#topdiv {
+  margin-left: 2%;
+}
+#toptext {
+  font-size: 1.5em;
+}
+#Brand {
+  font-size: 1.8em;
+}
+#sidebar {
+  border: solid 1px #9e9aad;
+  text-align: center;
+  height: auto;
+}
+#container {
+  position: relative;
+  bottom: 95%;
+  left: 5%;
+}
+#loginCard {
+  border: solid 3px #3486eb;
+  border-radius: 2em;
+  width: 42vw;
+  position: relative;
+  left: 30%;
+  top: 35vh;
+  box-shadow: 2px 2px 2px 2px grey;
+}
+#loginLable {
+  font-size: 1.2em;
+}
+#loginRow {
+  margin-bottom: 1.5vh;
+  margin-top: 1.5vh;
+}
+#LoginBtn,
+#FirstBtn {
+  margin-top: 1.5vh;
+  width: 40%;
+  border-radius: 2em;
+}
+#room-card {
+  border-radius: 1.5em;
+  margin-left: 3%;
+  margin-top: 3%;
+}
+#avalibleIcon {
+  color: green;
+}
+#chkinIcon {
+  color: red;
+}
+#BookingRow, #MenuBookingRow{
+  margin-top: 2%;
+}
+#CustomerBody, #RoomServicesBody{
+  margin-top: 5%;
+}
+#SideBarSelect{
+  margin-top: 20%;
+}
+#sidebar h3{
+  margin-top: 5%;
+}
+
+#bookingRecordBody {
+  margin-top: 2%;
+  
+}
+#bookingRecord{
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.scroll{
+  height: calc(100em - 450px);
+  overflow-y: scroll;
+}
+
+.selectable{
+  cursor: pointer;
+}
+
+.bookscrool{
+  height: calc(100% - 940px);
+  overflow-y: scroll;
+}
+.active{
+  color: #db1843;
+}

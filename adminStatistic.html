@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="CSS/main.css" />
+    <style type="text/css">
+      html,
+      body {
+        height: 100%;
+      }
+      
+    </style>
+    <title>Statistic Analyzer</title>
+  </head>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://kit.fontawesome.com/9dd9de67e1.js" crossorigin="anonymous"></script>
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="JS/main.js"></script>
+  <script src="JS/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js" integrity="sha512-tMabqarPtykgDtdtSqCL3uLVM0gS1ZkUAVhRFu1vSEFgvB73niFQWJuvviDyBGBH22Lcau4rHB5p2K2T0Xvr6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <body onload="checkAdmin()">
+    <nav class="navbar navbar-dark bg-primary bg-gradient">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1" id="Brand">Hotel Management System</span>
+        <div class="navbar-nav me-auto" id="topdiv">
+          <span class="navbar-text" style="color: white" id="toptext">Statistic Analyzer 
+          </span>
+        </div>
+        <div  class="navbar-nav ms-auto">
+          <span style="color: white;" id="SID" hidden></span>
+          <span style="color: white;" id="Name">Hello <button class="btn btn-warning ms-3" onclick="logout()">Logout</button></span>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-1 " id="sidebar">
+          <div class="mb-2">
+        </div>
+          <div id="SideBarSelect">
+            <h4 class="selectable" onclick="adminPage('room')">Room</h4>
+            <h4 class="selectable" onclick="adminPage('kitchen')">Kitchen</h4>
+            <h4 class="selectable" onclick="adminPage('services')">Services</h4>
+            <h4 class="selectable" onclick="adminPage('inventory')">Inventory</h4>
+            <h4 class="selectable" onclick="adminPage('staff')">Staff</h4>
+            <h4 class="selectable active" onclick="adminPage('analyze')">Analyze</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid col-10" id="container">
+      <div class="row"><select class="form-select w-25" id="GraphSelect">
+        <option selected>Please select a type</option>
+        <option value="gender">Gender</option>
+        <option value="total">Total Customer</option>
+        <option value="profits">Total profits</option>
+    </select> 
+    <button class="btn btn-primary col-3 ms-2" onclick="statisticGraph()">Confirm</button></div>
+        
+        <canvas id="myChart" class="w-100"></canvas>
+
+    
+    
+  </body>
+</html>

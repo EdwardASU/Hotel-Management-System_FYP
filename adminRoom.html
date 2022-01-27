@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="CSS/main.css" />
+    <style type="text/css">
+      html,
+      body {
+        height: 100%;
+      }
+      
+    </style>
+    <title>Room</title>
+  </head>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://kit.fontawesome.com/9dd9de67e1.js" crossorigin="anonymous"></script>
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="JS/main.js"></script>
+  <script src="JS/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js" integrity="sha512-tMabqarPtykgDtdtSqCL3uLVM0gS1ZkUAVhRFu1vSEFgvB73niFQWJuvviDyBGBH22Lcau4rHB5p2K2T0Xvr6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <body onload="adminRoom()">
+    <nav class="navbar navbar-dark bg-primary bg-gradient">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1" id="Brand">Hotel Management System</span>
+        <div class="navbar-nav me-auto" id="topdiv">
+          <span class="navbar-text" style="color: white" id="toptext">Room 
+          </span>
+        </div>
+        <div  class="navbar-nav ms-auto">
+          <span style="color: white;" id="SID" hidden></span>
+          <span style="color: white;" id="Name">Hello <button class="btn btn-warning ms-3" onclick="logout()">Logout</button></span>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-1 " id="sidebar">
+          <input type="text" class="mt-3 form-control" id="SearchInput" onchange="adminRoomSearch()" placeholder="Search any keyword">
+          <div class="mb-2">
+          <button class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#addRoomModal">Create</button>
+        </div>
+          <select class="form-select" id="floorSelect" onchange="getAdminRoomFloor()">
+          </select>
+          <div id="SideBarSelect">
+            <h4 class="selectable active" onclick="adminPage('room')">Room</h4>
+            <h4 class="selectable" onclick="adminPage('kitchen')">Kitchen</h4>
+            <h4 class="selectable" onclick="adminPage('services')">Services</h4>
+            <h4 class="selectable" onclick="adminPage('inventory')">Inventory</h4>
+            <h4 class="selectable" onclick="adminPage('staff')">Staff</h4>
+            <h4 class="selectable" onclick="adminPage('analyze')">Analyze</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid col-10" id="container">
+      <div class="row">
+        <button class="btn btn-primary col-1" onclick="setRoomSuites()">Set Room</button>
+        <select id="Suites" class="form-select w-auto col-1 ms-3"></select>
+        <button class="btn btn-danger col-1 ms-3" onclick="disableRoom()">Disable Room</button>
+        <button class="btn btn-primary col-1 ms-3" onclick="showSuites()" data-bs-toggle="modal" data-bs-target="#SuitesModal">Suites List</button>
+      </div>
+      <div class="scroll">
+      <div class="row mb-2 mt-2" id="room-place">
+
+        
+        </div>
+      </div>
+    <div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="DetailModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="DetailModalLabel">Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div id="DError"></div>
+              <div class="col-4">
+                <input type="text" hidden id="HRID">
+                <label class="form-label h3" id="DRID">Room: 1-01</label><br>
+                <label class="form-label h3" id="DType">Type: Normal Single Bed</label><br>
+                <label class="form-label h3" id="DCost">Cost per night: RM XX</label><br>
+                <label class="form-label h3" id="DStatus">Current Status: Available</label><br>
+              </div>
+              <div class="col-4">
+                <label class="form-label h3" id="DCusName">Current Customer: None</label><br>
+                <label class="form-label h3" id="DCid">Check in Date: None</label><br>
+                <label class="form-label h3" id="DPeriod">Period: None</label><br>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 border border-1 border-top border-end bookscrool" id="bookingRecordBody">
+                <div id="bookingRecord" class="border-3 border">
+                  <div class="row">
+                    <label class="col-lg-5 form-label" >Booking Date: XX-XX-XXXX</label>
+                    <label class="col-lg-5 form-label" >Check In Date: XX-XX-XXXX</label>
+                    <label class="col-5 form-label">Period: XX</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-5 form-label">Name: Mr.x</label>
+                    <label class="col-5 form-label">Remark:</label>
+                  </div>
+                </div>
+                <div id="bookingRecord" class="border-3 border">
+                  <div class="row">
+                    <label class="col-lg-5 form-label" >Booking Date: XX-XX-XXXX</label>
+                    <label class="col-lg-5 form-label" >Check In Date: XX-XX-XXXX</label>
+                    <label class="col-5 form-label">Period: XX</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-5 form-label">Name: Mr.x</label>
+                    <label class="col-5 form-label">Remark:</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6" id="statisticMonth">
+                <div class="row">
+                <label class="form-label" id="Total">Customer This month:</label>
+                <label  class="form-label" id="Male">Male Customer This month:</label>
+                <label  class="form-label" id="Female">Female Customer This month:</label>
+                <label  class="form-label" id="profits">Profits This month:</label>
+                <button class="btn btn-primary w-50 ms-2" onclick="getRoomGraph()">Statistic</button>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="SuitesModal" tabindex="-1" aria-labelledby="SuitesModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="BookingModalLabel">Suites</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div id="RoleButton">
+                  <button class="btn btn-primary col-3" data-bs-toggle="modal" data-bs-target="#editSuitesModal" onclick="addSuitesModal()">Add New Suites</button>
+              </div>
+            <div id="BError"></div>
+            <div class="row-cols-1" id="SuitesList">
+                
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="editSuitesModal" tabindex="-1" aria-labelledby="editSuitesModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="BookingModalLabel">Add & Edit Suites</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row row-cols-5">
+              <label class="col form-label">Suites Name:</label>
+              <input type="text" class="col form-control w-50" id="SuitesName">
+            </div>
+            <div class="row row-cols-5 mt-2">
+              <label class="col form-label">Cost:</label>
+              <input type="text" class="col form-control w-50" id="SuitesCost" required>
+            </div>
+              <label class="col form-label">Desc:</label>
+                <textarea class="form-control w-50" id="SuitesDesc"></textarea>
+          </div>
+          <div class="modal-footer" id="SuitesbuttonArea">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="BookingModalLabel">Add Room</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row row-cols-5">
+              <label class="col form-label">How many Floor want to add:</label>
+              <input type="text" class="col form-control w-50" id="FloorNumber">
+            </div>
+            <div class="row row-cols-5 mt-2">
+              <label class="col form-label">How many room per floor:</label>
+              <input type="text" class="col form-control w-50" id="RoomNumber" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  onclick= "addRoom()" >Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="GraphModal" tabindex="-1" aria-labelledby="GraphModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="BookingModalLabel">Statistic</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <canvas id="myChart" class="w-100"></canvas>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

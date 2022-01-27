@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="CSS/main.css" />
+    <title>Login</title>
+    <style type="text/css"></style>
+  </head>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <script src="JS/main.js"></script>
+  <script src="JS/bootstrap.min.js"></script>
+  <body>
+    <div class="card text-center" id="loginCard">
+      <div class="card-body">
+        <div class="form-group row" id="loginRow">
+          <label class="col-sm-2 col-form-label" id="loginLable"
+            >Stuff ID:</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="SID"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group row" id="loginRow">
+          <label class="col-sm-2 col-form-label" id="loginLable">Password:</label>
+          <div class="col-sm-10">
+            <input type="password"class="form-control form-control-lg"id="PW" required/>
+          </div>
+          <div>
+            <button
+              type="button"
+              class="btn btn-primary btn-lg"
+              id="LoginBtn"
+              onclick="login()"
+            >
+              Log in
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 mx-auto" id="WarningDIV">
+      <ul class="text-center" id="Warning"></ul>
+    </div>
+    <ul class="">
+      <li>Admin ID: ADM001 password: QZ6SEA</li>
+      <li>Front Desk ID: FRD001 password: Z8QV6Y</li>
+      <li>Kitchen ID: KIT001 password: ANWL1U</li>
+      <li>Kitchen ID: KIT002 password: 9SOFTB</li>
+      <li>Room Services ID: RMS001 password: 4SO8FB</li>
+      <li>Room Services ID: RMS002 password: UTN5CA</li>
+      <li>Inventory ID: INT001 password: M5ITQZ</li>
+    </ul>
+  </body>
+  <script>
+    addEventListener('keypress',function(e){
+      if (e.key === 'Enter'){
+        login();
+      }
+    })
+  </script>
+</html>

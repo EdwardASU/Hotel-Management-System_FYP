@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="CSS/main.css" />
+    <style type="text/css">
+      html,
+      body {
+        height: 100%;
+      }
+      
+    </style>
+    <title>Staff and Roles </title>
+  </head>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://kit.fontawesome.com/9dd9de67e1.js" crossorigin="anonymous"></script>
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="JS/main.js"></script>
+  <script src="JS/bootstrap.min.js"></script>
+  <body onload="adminStaff()">
+    <nav class="navbar navbar-dark bg-primary bg-gradient">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1" id="Brand">Hotel Management System</span>
+        <div class="navbar-nav me-auto" id="topdiv">
+          <span class="navbar-text" style="color: white" id="toptext">Staff and Roles 
+          </span>
+        </div>
+        <div  class="navbar-nav ms-auto">
+          <span style="color: white;" id="SID" hidden></span>
+          <span style="color: white;" id="Name">Hello <button class="btn btn-warning ms-3" onclick="logout()">Logout</button></span>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-1" id="sidebar">
+          <input type="text" class="mt-3 form-control" id="SearchInput" onchange="adminStaffSearch()" placeholder="Search any keyword">
+          <div id="SideBarSelect">
+            <h4 class="selectable" onclick="adminPage('room')">Room</h4>
+            <h4 class="selectable" onclick="adminPage('kitchen')">Kitchen</h4>
+            <h4 class="selectable" onclick="adminPage('services')">Services</h4>
+            <h4 class="selectable" onclick="adminPage('inventory')">Inventory</h4>
+            <h4 class="selectable active" onclick="adminPage('staff')">Staff</h4>
+            <h4 class="selectable" onclick="adminPage('analyze')">Analyze</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid col-10" id="container">
+      <div id="button" class="row">
+          <button class="btn btn-primary col-3" data-bs-toggle="modal" data-bs-target="#RolesModal" onclick="showRoles()">Role List</button>
+          <button class="btn btn-primary col-2 ms-3" data-bs-toggle="modal" data-bs-target="#StaffModal" onclick="addStaffModal()">Add Staff</button>
+      </div>
+        <div class="row-cols-1 scroll mt-2" id="normal-bar">
+            
+        </div>
+        
+
+    <div class="modal fade" id="RolesModal" tabindex="-1" aria-labelledby="RolesModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="BookingModalLabel">Roles List</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div id="RoleButton">
+                  <button class="btn btn-primary col-3" data-bs-toggle="modal" data-bs-target="#AddRolesModal" onclick="addRolesModal()">Add New Roles</button>
+              </div>
+            <div id="BError"></div>
+            <div class="row-cols-1" id="RoleList">
+                <div class="card col-11" id="room-card">
+                    <div class="card-body">
+                      <div class="row">
+                          <p class="h3 col-5">Roles:ADM001</p>
+                          <button class="btn btn-primary col-2 ms-5">Edit</button>
+                      </div>
+                      <div class="row mt-2">
+                        <p class="h3 col-5">Position: Admin</p>
+                        <button class="btn btn-primary col-2 ms-5">Delete</button>
+                      </div>
+                    </div>
+                    </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="StaffModal" tabindex="-1" aria-labelledby="StaffModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="BookingModalLabel">Add & Edit Staff</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              
+            <div id="BError"></div>
+            <div class="row row-cols-5">
+              <label class="col form-label">Staff Name:</label>
+              <input type="text" class="col form-control w-50" id="StaffID" hidden>
+              <input type="text" class="col form-control w-50" id="StaffName" required>
+            </div>
+            <div class="row row-cols-5 mt-2">
+              <label class="col form-label">Staff Position:</label>
+              <select class="col form-select w-50" id="positionSelect">
+
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer" id="StaffbuttonArea">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#StaffModal" >Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="AddRolesModal" tabindex="-1" aria-labelledby="AddRolesModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="BookingModalLabel">Roles List</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row row-cols-5">
+              <label class="col form-label">Roles Name:</label>
+              <div id="RolesSelection">
+              </div>
+            </div>
+            <div class="row row-cols-5 mt-2">
+              <label class="col form-label">Roles Prefix:</label>
+              <input type="text" class="col form-control w-50" id="RolesPrefix" required>
+            </div>
+          </div>
+          <div class="modal-footer" id="RolesbuttonArea">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#StaffModal" >Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="editRolesModal" tabindex="-1" aria-labelledby="editRolesModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="BookingModalLabel">Edit Roles</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row row-cols-5">
+              <label class="col form-label">Roles Name:</label>
+              <input type="text" class="col form-control w-50" id="editRolesName" readonly>
+            </div>
+            <div class="row row-cols-5 mt-2">
+              <label class="col form-label">Roles Prefix:</label>
+              <input type="text" class="col form-control w-50" id="editRolesPrefix" required>
+            </div>
+          </div>
+          <div class="modal-footer" id="RolesbuttonArea">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#RolesModal" onclick="editRoles()" >Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="PassModal" tabindex="-1" aria-labelledby="PassModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="BookingModalLabel">Your ID and Password</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row row-cols-1">
+              <label class="col form-label" id="PassID"></label>
+              <label class="col form-label" id="PassName"></label>
+              <label class="col form-label" id="PassPosition"></label>
+              <label class="col form-label" id="PassPass"></label>
+              
+            </div>
+            <h3>Make sure you save your ID and Password!!!!</h3>
+          </div>
+          <div class="modal-footer" id="RolesbuttonArea">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    
+  </body>
+</html>

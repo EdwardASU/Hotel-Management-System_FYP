@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="CSS/main.css" />
+    <style type="text/css">
+      html,
+      body {
+        height: 100%;
+      }
+      
+    </style>
+    <title>Kitchen</title>
+  </head>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://kit.fontawesome.com/9dd9de67e1.js" crossorigin="anonymous"></script>
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="JS/main.js"></script>
+  <script src="JS/bootstrap.min.js"></script>
+  <body onload="Kitchen()">
+    <nav class="navbar navbar-dark bg-primary bg-gradient">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1" id="Brand">Hotel Management System</span>
+        <div class="navbar-nav me-auto" id="topdiv">
+          <span class="navbar-text" style="color: white" id="toptext">Kitchen 
+          </span>
+        </div>
+        <div  class="navbar-nav ms-auto">
+          <span style="color: white;" id="SID" hidden ></span>
+          <span style="color: white;" id="Name">Hello <button class="btn btn-warning ms-3" onclick="logout()">Logout</button></span>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-1" id="sidebar">
+          <input type="text" class="mt-3 form-control" id="SearchInput" onchange="KitchenSearch()" placeholder="Search menu">
+          <div id="FloorSelect" class="mt-5">
+            <h1 class="selectable" onclick="showKitTask()">Task</h1>
+            <h5 class="selectable" onclick="KitchenType('Complete')">Complete Task</h5>
+            <h5  class="selectable" onclick="KitchenType('Pending')">Active Task</h5>
+          </div>
+            <div id="SideBarSelect">
+              <h1 class="selectable" onclick="showMenu()">Menu</h1>
+              
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid col-10" id="container">
+      <div id="MenuButton">
+        
+      </div>
+      <div class="scroll">
+      <div class="row mt-2" id="Kitchen">
+
+        
+          </div>
+        </div>
+        </div>
+        
+        
+        <div class="modal fade" id="NewMenuModal" tabindex="-1" aria-labelledby="NewMenuModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="BookingModalLabel">Add new Meals</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="BError"></div>
+                <div class="row-cols-4">
+                <label class="form-label col-4">Meal Name:</label>
+                <input type="text" class="form-control col-5 w-75" id="NewMenuName">
+                <label class="form-label col-4">Price:</label>
+                <input type="text" class="form-control col-5 w-75" id="NewMenuPrice">
+                <label class="form-label col-4">Description:</label>
+                <textarea class="form-control" rows="4" style="width: 50%;" id="NewMenuDesc"></textarea>
+                <div>
+                  <label class="form-label col-10">Upload Meal Pictures:</label>
+                  <form id="MealPic">
+                    <input type="file" class="form-control fileToUpload" id="addPic">
+                  </form>
+                </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="addMenu()">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="EditMenuModal" tabindex="-1" aria-labelledby="EditMenuModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="BookingModalLabel">Edit Meals</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="BError"></div>
+                <div class="row-cols-4">
+                <label class="form-label col-4">Meal Name:</label>
+                <input type="text" class="form-control col-5 w-75" id="EditMenuID" hidden>
+                <input type="text" class="form-control col-5 w-75" id="EditMenuName">
+                <label class="form-label col-4">Price:</label>
+                <input type="text" class="form-control col-5 w-75" id="EditMenuPrice">
+                <label class="form-label col-4">Description:</label>
+                <textarea class="form-control" rows="4" style="width: 50%;" id="EditMenuDesc"></textarea>
+                <div>
+                  <label class="form-label col-10">Upload Meal Pictures:</label>
+                  <form id="MealPic">
+                    <input type="file" class="form-control fileToUpload" id="editPic">
+                  </form>
+                </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="editMenu()">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  </body>
+</html>
